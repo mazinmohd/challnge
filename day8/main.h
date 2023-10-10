@@ -10,6 +10,6 @@
 
 char *read_line(void);
 char **spilt_line(char *new_line);
-void exec(char **args);
+int exec(char **args);
 
 #endif

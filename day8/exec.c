@@ -1,20 +1,25 @@
 #include "main.h"
 
 
-void exec(char **args)
+int exec(char **args)
 {
+	int status = 0;
 	pid_t id;
 
 	id = fork();
 
 	if (id == 0)
 	{
-		execve(args[0], args, NULL);
-		perror(args[0]);
-		exit(1);
+		if (execve(args[0], args, NULL) == -1)
+		{
+			perror(args[0]);
+			exit(127);
+		}
+
 	}
 	else
 	{
-		wait(NULL);
+			waitpid(id, &status, 0);
 	}
+	return (WEXITSTATUS(status));
 }
