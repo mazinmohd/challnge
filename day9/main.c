@@ -1,10 +1,13 @@
 #include "main.h"
 
-int main(void)
+int main(int argc, char **argv)
 {
 	char *line = NULL;
 	char **tokens = NULL;
 	int status = 0;
+
+	(void)argv;
+	(void) argc;
 
 	while (1)
 	{
@@ -18,7 +21,6 @@ int main(void)
 				write(1, "\n", 2);
 			return (status);
 		}
-		
 		if (is_empty(line))
 		{
 			free(line);
@@ -30,6 +32,8 @@ int main(void)
 			free(tokens);
 			continue;
 		}
+		if (check_built(line))
+			handle_built(tokens, &status, line);
 		status = exec(tokens, line);
 
 		free(tokens);
